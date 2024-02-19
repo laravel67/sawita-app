@@ -16,11 +16,7 @@ class PupukController extends Controller
 
     public function index()
     {
-        $pupuks = Pupuk::orderBy('id', 'desc')->paginate(10);
-        return view('dashboard.pupuk.index', [
-            'sub' => 'Daftar Pupuk',
-            'pupuks' => $pupuks
-        ]);
+        return view('dashboard.pupuk.index');
     }
 
 
