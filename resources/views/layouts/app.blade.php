@@ -36,9 +36,14 @@
         trix-toolbar [data-trix-button-group="file-tools"] {
             display: none;
         }
+
+        .equal-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+        }
     </style>
 </head>
-
 
 <body class="dark">
     <script src="{{ asset('js/themes/initTheme.js') }}"></script>

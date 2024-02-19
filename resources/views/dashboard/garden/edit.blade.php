@@ -76,6 +76,32 @@
                         @enderror
                     </div>
                 </div>
+                <div class="col-md-6 col-12 mb-md-3">
+                    <div class="form-group mandatory">
+                        <label class="form-label">{{ __('Jenis Tanah') }}</label>
+                        <select class="form-control form-control-select @error('jenis_tanah') is-invalid @enderror"
+                            name="jenis_tanah" id="jenis_tanah">
+                            <option value="Tanah Gambut" {{ old('jenis', $garden->jenis_tanah)=='Tanah Gambut' ?
+                                'selected'
+                                : '' }}>Tanah Gambut</option>
+                            <option value="Tanah Alluvial" {{ old('jenis', $garden->jenis_tanah)=='Tanah Alluvial'
+                                ? 'selected' : '' }}>Tanah Alluvial
+                            </option>
+                            <option value="Tanah Laterit" {{ old('jenis', $garden->jenis_tanah)=='Tanah Laterit' ?
+                                'selected'
+                                : '' }}>Tanah Laterit
+                            </option>
+                            <option value="Tanah Podzolik" {{ old('jenis', $garden->jenis_tanah)=='Tanah Podzolik'
+                                ? 'selected' : '' }}>Tanah Podzolik
+                            </option>
+                        </select>
+                        @error('jenis_tanah')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="form-label">Deskripsi Lahan</label>
                     <input id="deskripsi" type="hidden" name="deskripsi"

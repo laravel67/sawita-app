@@ -40,7 +40,7 @@ class PupukController extends Controller
             'name' => 'required|string|max:255|unique:pupuks',
             'category_id' => 'required',
             'satuan' => 'required',
-            'kegunaan' => 'required',
+            'manfaat' => 'required',
             'penggunaan' => 'required',
             'stok' => 'required|integer',
             'image' => 'max:1024|image|nullable',
@@ -75,7 +75,7 @@ class PupukController extends Controller
         $rules = [
             'category_id' => 'required',
             'satuan' => 'required',
-            'kegunaan' => 'required',
+            'manfaat' => 'required',
             'penggunaan' => 'required',
             'stok' => 'required|integer',
             'image' => 'max:1024|image|nullable',
@@ -100,7 +100,6 @@ class PupukController extends Controller
             Storage::delete($pupuk->image);
         }
         Pupuk::destroy($pupuk->id);
-
         return back()->with('success', 'Data berhasil dihapus');
     }
 }

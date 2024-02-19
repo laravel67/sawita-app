@@ -18,4 +18,8 @@ class Pupuk extends Model
     {
         return $this->hasMany(Analize::class);
     }
+    public function guides()
+    {
+        return $this->hasMany(Guide::class);
+    }
 }

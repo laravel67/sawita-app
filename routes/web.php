@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GardenController;
+use App\Http\Controllers\GuideController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PupukController;
-
+use App\Http\Controllers\SettController;
 
 Auth::routes();
 
@@ -23,9 +24,11 @@ Route::resource('/dashboard/categories', CategoryController::class)->names('cate
 Route::resource('/dashboard/gardens', GardenController::class)->names('garden');
 Route::resource('/dashboard/results', AnalizedController::class)->names('result');
 Route::resource('/dashboard/myprofile', ProfileController::class)->names('profile');
+Route::resource('dashbaord/guides', GuideController::class)->names('guide');
 // Jadwal
 Route::resource('/dashboard/jadwal', JadwalController::class)->names('jadwal');
 Route::post('/dashboard/generate', [AddlistController::class, 'generating'])->name('generate');
+Route::delete('/jadwal/{gardenId}', [SettController::class, 'destroy'])->name('deletes');
 // Analisis ROUTERS
 Route::get('/dashboar/analize/start', [AnalizeController::class, 'index'])->name('analize.index');
 Route::post('/dashboar/analize/results', [AnalizeController::class, 'analize'])->name('process.analize');

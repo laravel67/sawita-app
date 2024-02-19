@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guides', function (Blueprint $table) {
+        Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pupuk_id')->unique();
-            $table->string('excerpt');
-            $table->text('body');
+            $table->foreignId('garden_id');
+            $table->string('keasaman');
+            $table->string('kelembaban');
+            $table->string('tujuan');
+            $table->date('jadwal');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guides');
+        Schema::dropIfExists('jadwals');
     }
 };

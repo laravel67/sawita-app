@@ -61,7 +61,7 @@
                             </a>
                         </li>
                         <li class="submenu-item  ">
-                            <a href="" class="submenu-link">Panduan Pemberian Pupuk
+                            <a href="{{ route('guide.index') }}" class="submenu-link">Panduan Pemberian Pupuk
                             </a>
                         </li>
                     </ul>

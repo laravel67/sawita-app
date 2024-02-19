@@ -70,9 +70,9 @@
                 </div>
                 <div class="form-group mandatory">
                     <label class="form-label">Jelaskan Manfaat/Kegunaan Pupuk</label>
-                    <input id="kegunaan" type="hidden" name="kegunaan" value="{{ old('kegunaan',$pupuk->kegunaan) }}">
-                    <trix-editor input="kegunaan"></trix-editor>
-                    @error('kegunaan')
+                    <input id="manfaat" type="hidden" name="manfaat" value="{{ old('manfaat',$pupuk->manfaat) }}">
+                    <trix-editor input="manfaat"></trix-editor>
+                    @error('manfaat')
                     <div class="invalid-feedback">
                         {{ $message }}
                     </div>

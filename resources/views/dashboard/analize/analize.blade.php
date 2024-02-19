@@ -26,7 +26,6 @@
                 </select>
                 <label class="text-sm" for="jenis">Pilih Jenis Tanah</label>
             </div>
-
             <div class="form-floating mb-4">
                 <input type="number" name="keasaman" class="form-control @error('keasaman')
                     is-invalid
@@ -52,8 +51,6 @@
             <div class="text-end">
                 <div class="mb-2">
                     <button id="startAnalysisBtn" name="startAnalysisBtn" class="btn btn-primary" type="submit">
-                        <span id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
-                            style="display: none;"></span>
                         Mulai Analisis Lahan
                     </button>
                 </div>
@@ -63,21 +60,5 @@
 </div>
 @endsection
 @push('js')
-<script>
-    document.getElementById('analysisForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const button = document.getElementById('startAnalysisBtn');
-    const spinner = document.getElementById('spinner');
-    button.disabled = true;
-    spinner.style.display = 'inline-block';
-    button.innerText = 'Sedang menganalisis...';
-    setTimeout(function () {
-    button.disabled = false;
-    spinner.style.display = 'none';
-    button.style.display = 'none';
-    event.target.submit();
-    }, 3000);
-    });
-</script>
-{{-- <script src="{{ asset('assets/js/script.js') }}"></script> --}}
+<script src="{{ asset('js/load.js') }}"></script>
 @endpush

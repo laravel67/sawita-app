@@ -35,6 +35,7 @@ class GardenController extends Controller
             'luas' => 'required|numeric',
             'deskripsi' => 'nullable',
             'jumlah_batang' => 'required|numeric',
+            'jenis_tanah' => 'required',
             'satuan' => 'required'
         ];
         $validated = $request->validate($rules);
@@ -55,17 +56,17 @@ class GardenController extends Controller
     public function update(Request $request, Garden $garden)
     {
         $rules = [
-            'lokasi' => 'max:100|required|string',
             'luas' => 'required|numeric',
             'deskripsi' => 'nullable',
             'jumlah_batang' => 'required|numeric',
+            'jenis_tanah' => 'required',
             'satuan' => 'required'
         ];
         $rules['lokasi'] = [
             'required',
             'string',
             function ($attribute, $value, $fail) {
-                if (count(explode(',', $value)) !== 3) {
+                if (count(explode(',', $value)) !== 2) {
                     $fail($attribute . ' harus terdiri dari tiga bagian yang dipisahkan oleh koma (kabupaten, kecamatan, kelurahan).');
                 }
             }

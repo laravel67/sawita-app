@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Garden;
+use App\Models\Jadwal;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -13,57 +14,58 @@ class JadwalController extends Controller
     }
     public function index()
     {
+        $jadwals = Jadwal::orderBy('garden_id')->orderByDesc('jadwal')->get();
+        $groupedJadwals = $jadwals->groupBy('garden_id');
         return view('dashboard.jadwal.index', [
-            'sub' => ''
+            'sub' => 'Jadwal Pemupukan',
+            'groupedJadwals' => $groupedJadwals,
         ]);
     }
+
 
     public function create()
     {
         $gardens = Garden::all();
         return view('dashboard.jadwal.create', [
             'sub' => 'Generate Jadwal',
-            'gardens' => $gardens
+            'gardens' => $gardens,
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'garden_id' => 'required',
+            'keasaman' => 'required',
+            'kelembaban' => 'required',
+            'tujuan' => 'required',
+            'jadwal' => 'required|array',
+            'jadwal.*' => 'required|date',
+        ]);
+        $jadwal = $request->jadwal;
+        foreach ($jadwal as $jadwalItem) {
+            Jadwal::create([
+                'garden_id' => $request->garden_id,
+                'keasaman' => $request->keasaman,
+                'kelembaban' => $request->kelembaban,
+                'tujuan' => $request->tujuan,
+                'jadwal' => $jadwalItem,
+            ]);
+        }
+        return redirect()->route('jadwal.index')->with('success', 'Jadwal Pemupukan berhasil ditambah');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, Jadwal $jadwal)
     {
-        //
+        $jadwal->status = 1;
+        $jadwal->save();
+        return redirect()->back()->with('success', 'Status berhasil diubah');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Jadwal $jadwal)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        Jadwal::destroy($jadwal->id);
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }

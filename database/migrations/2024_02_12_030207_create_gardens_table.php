@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('luas')->default(0);
             $table->string('satuan');
             $table->bigInteger('jumlah_batang')->default(0);
+            $table->string('jenis_tanah');
             $table->text('deskripsi')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
