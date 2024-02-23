@@ -22,4 +22,9 @@ class Pupuk extends Model
     {
         return $this->hasMany(Guide::class);
     }
+
+    public function stoks()
+    {
+        return $this->hasMany(Stok::class);
+    }
 }

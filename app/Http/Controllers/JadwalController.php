@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analize;
 use App\Models\Garden;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
@@ -25,10 +26,10 @@ class JadwalController extends Controller
 
     public function create()
     {
-        $gardens = Garden::all();
+        $analizes = Analize::all();
         return view('dashboard.jadwal.create', [
             'sub' => 'Generate Jadwal',
-            'gardens' => $gardens,
+            'analizes' => $analizes,
         ]);
     }
 

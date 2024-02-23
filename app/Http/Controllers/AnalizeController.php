@@ -95,6 +95,7 @@ class AnalizeController extends Controller
             return "Pupuk tidak ditemukan";
         }
     }
+
     private function getPemupukanInterval($jenisTanah, $keasaman, $kelembaban)
     {
         if ($jenisTanah == 'Tanah Gambut') {

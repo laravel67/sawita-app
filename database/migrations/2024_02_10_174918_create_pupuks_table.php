@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('category_id');
             $table->string('satuan');
-            $table->bigInteger('stok');
             $table->text('manfaat');
             $table->text('penggunaan');
             $table->string('image')->nullable();

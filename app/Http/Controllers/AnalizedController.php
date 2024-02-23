@@ -13,9 +13,8 @@ class AnalizedController extends Controller
     }
     public function index()
     {
-        $sub = '';
-        $results = Analize::orderBy('id', 'desc')->paginate(5);
-        return view('dashboard.analize.result.index', compact('sub', 'results'));
+        $analizes = Analize::orderBy('id', 'desc')->get();
+        return view('dashboard.analize.result.index', compact('analizes'));
     }
 
     /**

@@ -19,11 +19,13 @@
                             <a href="{{ route('pupuk.index') }}" class="submenu-link">Data Pupuk
                             </a>
                         </li>
+                        @can('admin')
                         <li class="submenu-item  ">
                             <a href="{{ route('category.index') }}" class="submenu-link">
                                 Kategori / Jenis
                             </a>
                         </li>
+                        @endcan
                     </ul>
                 </div>
             </div>
@@ -51,7 +53,7 @@
 
         <li class="menu-item  has-sub">
             <a href="#" class="menu-link">
-                <span><i class="fas fa-book"></i> Guides</span>
+                <span><i class="fas fa-book"></i> Panduan</span>
             </a>
             <div class="submenu ">
                 <div class="submenu-group-wrapper">
@@ -69,46 +71,16 @@
             </div>
         </li>
 
-        <li class="menu-item  has-sub">
-            <a href="#" class="menu-link">
+        <li class="menu-item">
+            <a href="{{ route('garden.index') }}" class="menu-link">
                 <span><i class="fas fa-map"></i> Data Lahan</span>
             </a>
-            <div class="submenu ">
-                <div class="submenu-group-wrapper">
-                    <ul class="submenu-group">
-
-                        <li class="submenu-item  ">
-                            <a href="{{ route('garden.index') }}" class="submenu-link">Daftar Lahan/Perkebunan
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </li>
 
-        <li class="menu-item  has-sub">
-            <a href="#" class="menu-link">
+        <li class="menu-item">
+            <a href="{{ route('about.show') }}" class="menu-link">
                 <span><i class="fas fa-info-circle"></i> Info</span>
             </a>
-            <div class="submenu ">
-                <div class="submenu-group-wrapper">
-                    <ul class="submenu-group">
-
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Lokasi
-                            </a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Kontak
-                            </a>
-                        </li>
-                        <li class="submenu-item  ">
-                            <a href="#" class="submenu-link">Sawita Raya
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </li>
     </ul>
     @endauth

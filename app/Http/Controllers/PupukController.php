@@ -38,7 +38,6 @@ class PupukController extends Controller
             'satuan' => 'required',
             'manfaat' => 'required',
             'penggunaan' => 'required',
-            'stok' => 'required|integer',
             'image' => 'max:1024|image|nullable',
         ]);
         if ($request->file('image')) {
@@ -73,7 +72,6 @@ class PupukController extends Controller
             'satuan' => 'required',
             'manfaat' => 'required',
             'penggunaan' => 'required',
-            'stok' => 'required|integer',
             'image' => 'max:1024|image|nullable',
         ];
         if ($request->name != $pupuk->name) {

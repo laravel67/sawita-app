@@ -23,13 +23,21 @@
                     class="user-dropdown d-flex align-items-center dropend dropdown-toggle" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <div class="avatar">
-                        <img src="{{ asset('assets/compiled/jpg/3.jpg') }}" alt="Avatar">
+                        @if (Auth::user()->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Avatar">
+                        @else
+                        <img src="{{ asset('user.svg') }}" alt="Avatar">
+                        @endif
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="topbarUserDropdown" style="">
-                    <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i class="fas fa-user-circle"></i>
+                    <li><a class="dropdown-item" href="{{ route('account.index') }}"><i class="fas fa-user-circle"></i>
                             Profile</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                    @can('admin')
+                    <li><a class="dropdown-item" href="{{ route('setting.index') }}"><i class="fas fa-cog"></i>
+                            Pengaturan</a>
+                    </li>
+                    @endcan
                     <li>
                         <hr class="dropdown-divider">
                     </li>

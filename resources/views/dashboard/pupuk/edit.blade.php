@@ -92,7 +92,7 @@
                 <div class="col-md-6 col-12 mb-md-3">
                     <div class="form-group">
                         <label class="form-label">Gambar/Image</label>
-                        <input type="hidden" name="imgImage" value="{{ $pupuk->image }}">
+                        <input type="hidden" name="imageOld" value="{{ $pupuk->image }}">
                         <input type="file" class="form-control @error('image')
                             is-invalid @enderror" name="image" id="image" onchange="previewImage()">
                         <div class="img-fluid mt-3">
@@ -111,19 +111,12 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-md-flex align-items-center justify-content-md-between">
-                    <div class="form-group">
-                        <div class="form-check mandatory">
-                            <input type="checkbox" class="form-check-input" id="checkbox">
-                            <label class="form-check-label form-label" for="checkbox">Yakin ingin menyimpan data
-                                ini?</label>
-                        </div>
-                    </div>
+                <div class="d-md-flex align-items-center justify-content-end">
                     <div class="text-end">
                         <a href="{{ route('pupuk.index') }}" class="btn btn-outline-secondary">
                             Kembali
                         </a>
-                        <button type="submit" id="btn-submit" class="btn btn-primary" disabled>
+                        <button type="submit" id="btn-submit" class="btn btn-primary">
                             Simpan
                         </button>
                     </div>
@@ -134,5 +127,5 @@
 </div>
 @endsection
 @push('js')
-<script src="{{ asset('assets/js/script.js') }}"></script>
+<script src="{{ asset('script.js') }}"></script>
 @endpush

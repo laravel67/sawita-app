@@ -9,6 +9,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
+        $this->middleware(['auth', 'role:admin']);
         view()->share('title', 'Jenis/Kategori Pupuk');
     }
 
@@ -20,7 +21,6 @@ class CategoryController extends Controller
             'categories' => $categories
         ]);
     }
-
 
     public function create()
     {
@@ -38,12 +38,6 @@ class CategoryController extends Controller
         return redirect()->route('category.index')->with('success', 'Kategori berhasil ditambah');
     }
 
-    public function show(Category $category)
-    {
-        //
-    }
-
-
     public function edit(Category $category)
     {
         return view('dashboard.categories.edit', [
@@ -51,7 +45,6 @@ class CategoryController extends Controller
             'category' => $category
         ]);
     }
-
 
     public function update(Request $request, Category $category)
     {
@@ -62,7 +55,6 @@ class CategoryController extends Controller
         Category::where('id', $category->id)->update($validated);
         return redirect()->route('category.index')->with('success', 'Kategori berhasil diubah');
     }
-
 
     public function destroy(Category $category)
     {

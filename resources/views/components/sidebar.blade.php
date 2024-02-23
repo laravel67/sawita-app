@@ -17,13 +17,22 @@
                 <a href="#" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" data-reference="parent">
                     <div class="avatar">
-                        <img src="{{ asset('assets/compiled/jpg/3.jpg') }}" alt="Avatar">
+                        @if (Auth::user()->image)
+                        <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Avatar">
+                        @else
+                        <img src="{{ asset('user.svg') }}" alt="Avatar">
+                        @endif
                     </div>
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{ route('profile.index') }}"><i class="fas fa-user-circle"></i>
+                    <a class="dropdown-item" href="{{ route('account.index') }}"><i class="fas fa-user-circle"></i>
                         Profile</a>
-                    <a class="dropdown-item" href="#"><i class="fas fa-cog"></i> Pengaturan</a>
+                    @can('admin')
+                    <a class="dropdown-item" href="{{ route('setting.index') }}"><i class="fas fa-cog"></i>
+                        Pengaturan</a>
+                    <a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-users"></i>
+                        Pengguna</a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <form action="{{ route('logout') }}" method="post">
                         @csrf

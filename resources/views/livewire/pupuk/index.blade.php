@@ -4,9 +4,13 @@
             <h4 class="card-title">{{ $title }}</h4>
         </div>
         <div class="card-body">
-            <div class="d-md-flex align-item-center justify-content-around">
-                <div class="col-md-3 mb-md-2">
+            <div class="d-md-flex align-item-center justify-content-between">
+                <div class="col-md-6 mb-2">
                     <a class="btn btn-primary" href="{{ route('pupuk.create') }}"><i class="fas fa-plus"></i>Tambah</a>
+                    <a href="{{ route('stok.create') }}" class="btn btn-success text-white"><i class="fas fa-plus"></i>
+                        Stok</a>
+                    <a href="{{ route('stok.index') }}" class="btn btn-secondary text-white"><i class="fas fa-fill"></i>
+                        Lihat Data Stok Pupuk</a>
                 </div>
                 <div class="col-md-6">
                     <div class="input-group">
@@ -23,7 +27,7 @@
                             <th>Gambar</th>
                             <th>Nama Pupuk</th>
                             <th>Kategori/Jenis</th>
-                            <th>Stok</th>
+                            <th>Stok Tersedia</th>
                             <th>Manfaat/Kegunaan</th>
                             <th>Opsi</th>
                         </tr>
@@ -44,7 +48,26 @@
                             </td>
                             <td>{{ $pupuk->name }}</td>
                             <td>{{ $pupuk->category->name }}</td>
-                            <td>{{ $pupuk->stok }} {{ $pupuk->satuan }}</td>
+                            <td>
+                                @php
+                                $totalStok = 0; // Inisialisasi variabel totalStok
+                                $hasStok = false; // Inisialisasi variabel hasStok
+                                @endphp
+
+                                @foreach ($pupuk->stoks as $stok)
+                                @php
+                                $totalStok += $stok->total; // Menambahkan total stok dari setiap entri stok
+                                $hasStok = true; // Set hasStok menjadi true karena ada stok
+                                @endphp
+                                @endforeach
+
+                                @if ($hasStok)
+                                {{ $totalStok }} {{ $pupuk->satuan }}
+                                @else
+                                <!-- Jika tidak ada stok, tampilkan keterangan kosong -->
+                                {{ __('kosong') }}
+                                @endif
+                            </td>
                             <td>
                                 <a href="#showModal{{ $pupuk->id }}" class="btn btn-outline-light btn-sm"
                                     data-bs-toggle="modal">Lihat Sekarang</a>

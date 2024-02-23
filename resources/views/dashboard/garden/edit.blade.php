@@ -126,7 +126,7 @@
                         <a href="{{ route('garden.index') }}" class="btn btn-outline-secondary">
                             Kembali
                         </a>
-                        <button type="submit" id="btn-submit" class="btn btn-primary" disabled>
+                        <button type="submit" id="btn-submit" class="btn btn-primary">
                             Simpan
                         </button>
                     </div>

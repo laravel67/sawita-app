@@ -3,27 +3,30 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Password Reset Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller is responsible for handling password reset requests
-    | and uses a simple trait to include this behavior. You're free to
-    | explore this trait and override any methods you wish to tweak.
-    |
-    */
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'password' => 'required|string|min:6'
+        ]);
 
-    use ResetsPasswords;
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors(['error' => 'You are not logged in.']);
+        }
 
-    /**
-     * Where to redirect users after resetting their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+        $user = Auth::user();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return back()->with('success', 'Kata sandi berhasil diganti');
+    }
 }

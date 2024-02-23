@@ -5,39 +5,48 @@
         <h5>{{ $sub }}</h5>
     </div>
     <div class="card-body">
+        @if ($analizes->isNotEmpty())
+        @if(session('error'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('error') }}
+        </div>
+        @endif
         <form id="analysisForm" action="{{ route('generate') }}" method="POST">
             @csrf
-            <div class="mb-4">
-                <label for="garden_id" class="form-label">Pilih Lahan</label>
-                <select class="form-control" name="garden_id" id="garden_id">
-                    @foreach ($gardens as $garden)
-                    <option value="{{ $garden->id }}">{{$garden->name }}</option>
+            <div class="form-floating mb-4">
+                <select class="form-select" id="garden_id" name="garden_id">
+                    <option>-</option>
+                    @foreach ($analizes as $analize)
+                    <option value="{{ $analize->id }}">{{ $analize->garden->name }}</option>
                     @endforeach
                 </select>
+                <label class="text-sm" for="garden_id">Pilih Lahan yang akan dianalisis</label>
             </div>
-            <div class="mb-4">
-                <label for="jenis_tanah" class="form-label">Jenis Tanah</label>
-                <select class="form-control" name="jenis_tanah" id="jenis_tanah">
-                    <option value="Tanah Gambut">Tanah Gambut</option>
-                    <option value="Tanah Alluvial">Tanah Alluvial</option>
-                    <option value="Tanah Laterit">Tanah Laterit</option>
-                    <option value="Tanah Podzolik">Tanah Podzolik</option>
-                </select>
+            <div class="form-floating mb-4">
+                <input readonly type="text" name="jenis" class="form-control @error('jenis') is-invalid @enderror"
+                    id="jenis" placeholder="jenis">
+                <label class="text-sm" for="jenis">{{ __('Jenis Tanah') }}</label>
+                @error('jenis')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
             </div>
-            <div class="mb-4">
-                <label for="keasaman" class="form-label">{{ __('Tingkat Keasaman Tanah (pH)') }}</label>
-                <input type="number" class="form-control @error('keasaman') is-invalid @enderror" id="keasaman"
-                    name="keasaman">
+            <div class="form-floating mb-4">
+                <input readonly type="text" name="keasaman" class="form-control @error('keasaman') is-invalid @enderror"
+                    id="keasaman" placeholder="keasaman" autocomplete="off" step="0.1" min="0" max="14">
+                <label class="text-sm" for="keasaman">{{ __('Tingkat keasaman Tanah (pH)') }}</label>
                 @error('keasaman')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
-            <div class="mb-4">
-                <label for="kelembaban" class="form-label">{{ __('Tingkat Kelembaban Tanah (%)') }}</label>
-                <input type="number" class="form-control @error('kelembaban') is-invalid @enderror" id="kelembaban"
-                    name="kelembaban">
+            <div class="form-floating mb-4">
+                <input readonly type="text" name="kelembaban"
+                    class="form-control @error('kelembaban') is-invalid @enderror" id="kelembaban"
+                    placeholder="kelembaban" autocomplete="off">
+                <label class="text-sm" for="kelembaban">{{ __('Tingkat kelembaban Tanah(%)') }}</label>
                 @error('kelembaban')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -59,9 +68,32 @@
                 </button>
             </div>
         </form>
+        @else
+        <div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> Silahkan melakukan analisis lahan
+            terlebih dahulu.</div>
+        @endif
     </div>
 </div>
 @endsection
 @push('js')
-<script src="{{ asset('js/load.js') }}"></script>
+<script src="{{ asset('assets/js/load.js') }}"></script>
+<script>
+    $(document).ready(function() {
+    $('#garden_id').change(function() {
+    var selectedId = $(this).val();
+    var selectedAnalize = {!! $analizes->toJson() !!}.find(function(analize) {
+    return analize.id == selectedId;
+    });
+    if (selectedAnalize) {
+    $('#jenis').val(selectedAnalize.jenis);
+    $('#keasaman').val(selectedAnalize.keasaman);
+    $('#kelembaban').val(selectedAnalize.kelembaban);
+    } else {
+    $('#jenis').val('');
+    $('#keasaman').val('');
+    $('#kelembaban').val('');
+    }
+    });
+    });
+</script>
 @endpush

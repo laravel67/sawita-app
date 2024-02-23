@@ -9,12 +9,12 @@
                 <form id="authentication" action="{{ route('login') }}" method="POST">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
-                        <input type="email" class="form-control form-control-xl @error('email') is-invalid @enderror"
-                            placeholder="Email/Username" name="email" id="email" autofocus required autocomplete="off">
+                        <input type="text" class="form-control form-control-xl @error('login') is-invalid @enderror"
+                            placeholder="Email/Username" name="login" id="login" autofocus required autocomplete="off">
                         <div class="form-control-icon">
                             <i class="fas fa-user"></i>
                         </div>
-                        @error('email')
+                        @error('login')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -54,6 +54,3 @@
     </div>
 </div>
 @endsection
-@push('js')
-<script src="{{ asset('assets/js/load.js') }}"></script>
-@endpush

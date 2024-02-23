@@ -25,7 +25,7 @@
                         <th>Nama Lahan</th>
                         <th>Lokasi Lahan</th>
                         <th>Luas Lahan</th>
-                        <th>Satuan Luas</th>
+                        <th>Jenis Tanah</th>
                         <th>Jumlah Batang/Pohon</th>
                         <th>Opsi</th>
                     </tr>
@@ -38,8 +38,8 @@
                             {{ $garden->name }}
                         </td>
                         <td>{{ $garden->lokasi }}</td>
-                        <td>{{ $garden->luas }}</td>
-                        <td>{{ $garden->satuan }}</td>
+                        <td>{{ $garden->luas }} {{ $garden->satuan }}</td>
+                        <td>{{ $garden->jenis_tanah }}</td>
                         <td>{{ $garden->jumlah_batang }} Batang</td>
                         <td>
                             <div class="btn-group">

@@ -110,19 +110,12 @@
                     @enderror
                 </div>
                 <hr>
-                <div class="d-md-flex align-items-center justify-content-md-between">
-                    <div class="form-group">
-                        <div class="form-check mandatory">
-                            <input type="checkbox" class="form-check-input" id="checkbox">
-                            <label class="form-check-label form-label" for="checkbox">Yakin ingin menyimpan data
-                                ini?</label>
-                        </div>
-                    </div>
+                <div class="d-md-flex align-items-center justify-content-md-end">
                     <div class="text-end">
                         <a href="{{ route('garden.index') }}" class="btn btn-outline-secondary">
                             Kembali
                         </a>
-                        <button type="submit" id="btn-submit" class="btn btn-primary" disabled>
+                        <button type="submit" id="btn-submit" class="btn btn-primary">
                             Simpan
                         </button>
                     </div>
@@ -134,7 +127,6 @@
 @endsection
 @push('js')
 @include('dashboard.garden.script')
-<script src="{{ asset('assets/js/script.js') }}"></script>
 <script>
     fetch(`https://staggingabsensi.labura.go.id/api-wilayah-indonesia/static/api/districts/1311.json`)
     .then(response => response.json())

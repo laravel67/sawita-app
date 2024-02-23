@@ -22,7 +22,6 @@ class PupukFactory extends Factory
             'name' => $this->faker->word, // Generate a random word for name
             'category_id' => Category::factory()->create()->id, // Create a new category and use its ID
             'satuan' => $this->faker->randomElement(['Karung', 'Kilogram']), // Randomly select a unit
-            'stok' => $this->faker->numberBetween(0, 1000), // Generate a random stock quantity
             'image' => null, // Initialize image as null
         ];
     }
