@@ -33,7 +33,6 @@ class GardenController extends Controller
             'name' => 'max:50|required|string|unique:gardens,name',
             'lokasi' => 'max:100|required|string',
             'luas' => 'required|numeric',
-            'deskripsi' => 'nullable',
             'jumlah_batang' => 'required|numeric',
             'jenis_tanah' => 'required',
             'satuan' => 'required'
@@ -41,10 +40,6 @@ class GardenController extends Controller
         $validated = $request->validate($rules);
         Garden::create($validated);
         return redirect()->route('garden.index')->with('success', 'Data berhasil disimpan');
-    }
-    public function show(Garden $garden)
-    {
-        //
     }
     public function edit(Garden $garden)
     {
@@ -57,7 +52,6 @@ class GardenController extends Controller
     {
         $rules = [
             'luas' => 'required|numeric',
-            'deskripsi' => 'nullable',
             'jumlah_batang' => 'required|numeric',
             'jenis_tanah' => 'required',
             'satuan' => 'required'

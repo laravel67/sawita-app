@@ -15,6 +15,8 @@
                 <li class="list-group-item"><strong>Keasaman Tanah:</strong> {{ $keasaman }} pH</li>
                 <li class="list-group-item"><strong>Kelembaban Tanah:</strong> {{ $kelembaban }}%</li>
                 <li class="list-group-item"><strong>Pemupukan:</strong> {{ $tujuan }}</li>
+                <li class="list-group-item"><strong>Perbatang:</strong> {{ $requiredAmountPerPlant }} KG</li>
+                <li class="list-group-item"><strong>Total Kebutuhan Pupuk:</strong> {{ $totalPupuk }} KG</li>
             </ul>
             <ul class="list-group mb-3">
                 <div class="alert alert-info" role="alert">
@@ -28,10 +30,18 @@
         <div class="card-footer text-end">
             <form action="{{ route('jadwal.store') }}" method="post">
                 @csrf
+                <select name="pupuk_id" id="pupuk_id" class="form-control mb-4">
+                    @foreach ($pupuks as $pupuk)
+                    <option value="{{ $pupuk->id }}" {{ old('pupuk_id')==$pupuk->id ? 'selected' : '' }}>{{ $pupuk->name
+                        }}</option>
+                    @endforeach
+                </select>
                 <input type="hidden" name="garden_id" value="{{ $garden['id'] }}">
                 <input type="hidden" name="keasaman" value="{{ $keasaman }}">
                 <input type="hidden" name="kelembaban" value="{{ $kelembaban }}">
                 <input type="hidden" name="tujuan" value="{{ $tujuan }}">
+                <input type="hidden" name="pupuk_perbatang" value="{{ $requiredAmountPerPlant }}">
+                <input type="hidden" name="total_pupuk" value="{{ $totalPupuk }}">
                 @foreach($jadwalPemupukan as $tanggal)
                 <input type="hidden" name="jadwal[]" value="{{ $tanggal }}">
                 @endforeach

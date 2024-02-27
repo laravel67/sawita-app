@@ -76,6 +76,7 @@ class GuideController extends Controller
 
     public function destroy(Guide $guide)
     {
-        //
+        $guide->delete();
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }

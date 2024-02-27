@@ -2,17 +2,13 @@
     @include('components.header-top')
     <nav class="main-navbar">
         <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand d-none d-md-flex d-lg-flex align-items-center" href="{{ route('home') }}">
-                <img src="{{ asset('logo.png') }}" alt="" width="30" height="30">
-                <h4 class="ps-1 text-light">Sawita Raya</h4>
+            <a class="navbar-brand d-none d-md-flex d-lg-flex" href="{{ route('home.index') }}">
+                <h4 style="color: white">Sawita Raya</h4>
             </a>
             <div class="d-flex justify-content-md-center align-items-center">
                 @include('components.topbar-menu')
             </div>
-            @guest
-            <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm">Login <i
-                    class="fas fa-sign-in-alt"></i></a>
-            @else
+            @auth
             <div class="dropdown d-none d-md-flex d-lg-flex">
                 <a href="#" class="dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false" data-reference="parent">
@@ -40,7 +36,7 @@
                     </form>
                 </div>
             </div>
-            @endguest
+            @endauth
         </div>
     </nav>
 </header>

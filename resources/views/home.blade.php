@@ -14,41 +14,25 @@
         <hr>
     </div>
 </div>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center mb-5">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+            @foreach($slides as $key => $slide)
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $key }}" @if($key===0)
+                class="active" @endif aria-label="Slide {{ $key + 1 }}"></button>
+            @endforeach
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ asset('img/sawit4.jpg') }}" class="d-block w-100" alt="...">
+            @foreach($slides as $key => $slide)
+            <div class="carousel-item @if($key === 0) active @endif">
+                <img src="{{ asset('storage/'.$slide->image) }}" class="d-block" alt="{{ $slide->title }}"
+                    style="width: 80rem; height:40rem">
                 <div class="carousel-caption d-none d-md-block bg-dark rounded-3 opacity-75">
-                    <h2 class="text-light">Second slide label</h2>
-                    <strong class="text-light">Some representative placeholder content for the second
-                        slide.</strong>
+                    <h5 class="text-light">{{ $slide->title }}</h5>
+                    <p class="text-light">{{ $slide->body }}</p>
                 </div>
             </div>
-            <div class="carousel-item">
-                <img src="{{ asset('img/sawit4.jpg') }}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block bg-dark rounded-3 opacity-75">
-                    <h2 class="text-light">Second slide label</h2>
-                    <strong class="text-light">Some representative placeholder content for the second
-                        slide.</strong>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="{{ asset('img/sawit4.jpg') }}" class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block bg-dark rounded-3 opacity-75">
-                    <h2 class="text-light">Second slide label</h2>
-                    <strong class="text-light">Some representative placeholder content for the second
-                        slide.</strong>
-                </div>
-            </div>
+            @endforeach
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
             data-bs-slide="prev">
@@ -62,5 +46,10 @@
         </button>
     </div>
 </div>
+<iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5017.5868199399865!2d101.63891178511608!3d-1.058600596175451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e2b8dbb7c25b567%3A0xd20a958cf685b0f8!2sUNIVERSITAS%20DHARMAS%20INDONESIA!5e1!3m2!1sid!2sid!4v1709064065574!5m2!1sid!2sid"
+    width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
 </div>
 @endsection

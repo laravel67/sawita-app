@@ -17,12 +17,12 @@ class GardenFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
-            'lokasi' => $this->faker->city,
-            'luas' => $this->faker->numberBetween(100, 10000),
-            'satuan_luas' => 'hektar', // Anda bisa menyesuaikan satuan luas sesuai kebutuhan
-            'map' => $this->faker->url,
-            'image' => $this->faker->imageUrl(), // Gambar secara acak dari URL
+            'name' => $this->faker->name,
+            'lokasi' => $this->faker->address,
+            'luas' => $this->faker->randomNumber(),
+            'satuan' => 'Hektar', // Assuming the unit is square meters
+            'jumlah_batang' => $this->faker->randomNumber(),
+            'jenis_tanah' => $this->faker->randomElement(['Tanah Gambut', 'Tanah Alluvial', 'Tanah Laterit', 'Tanah Podzolik']),
             'created_at' => now(),
             'updated_at' => now(),
         ];

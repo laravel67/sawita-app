@@ -14,10 +14,13 @@ return new class extends Migration
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('garden_id');
+            $table->foreignId('pupuk_id');
             $table->string('keasaman');
             $table->string('kelembaban');
             $table->string('tujuan');
             $table->date('jadwal');
+            $table->integer('pupuk_perbatang');
+            $table->bigInteger('total_pupuk');
             $table->integer('status')->default(0);
             $table->timestamps();
         });

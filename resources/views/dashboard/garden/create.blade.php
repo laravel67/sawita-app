@@ -99,17 +99,6 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Deskripsi Lahan</label>
-                    <input id="deskripsi" type="hidden" name="deskripsi" value="{{ old('deskripsi') }}">
-                    <trix-editor input="deskripsi"></trix-editor>
-                    @error('deskripsi')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <hr>
                 <div class="d-md-flex align-items-center justify-content-md-end">
                     <div class="text-end">
                         <a href="{{ route('garden.index') }}" class="btn btn-outline-secondary">

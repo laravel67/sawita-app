@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -19,14 +21,20 @@ class AuthController extends Controller
         $credentials[$field] = $credentials['login'];
         unset($credentials['login']);
 
+        $user = User::where($field, $credentials[$field])->first();
+        if (!$user) {
+            return back()->withErrors(['login' => 'Email/Username tidak ditemukan']);
+        }
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard')->with('success', 'Login berhasil');
         }
-
-        return back()->withErrors(['login' => 'Login Failed']);
+        if ($user && !Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Password salah']);
+        }
+        return back()->withErrors(['login' => 'Login gagal']);
     }
-
     public function logout(Request $request)
     {
         Auth::logout();

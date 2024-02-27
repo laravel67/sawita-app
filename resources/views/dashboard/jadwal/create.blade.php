@@ -1,11 +1,12 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="card">
     <div class="card-header">
         <h5>{{ $sub }}</h5>
     </div>
     <div class="card-body">
-        @if ($analizes->isNotEmpty())
+        @if ($analisis->isNotEmpty())
         @if(session('error'))
         <div class="alert alert-danger" role="alert">
             {{ session('error') }}
@@ -16,8 +17,8 @@
             <div class="form-floating mb-4">
                 <select class="form-select" id="garden_id" name="garden_id">
                     <option>-</option>
-                    @foreach ($analizes as $analize)
-                    <option value="{{ $analize->id }}">{{ $analize->garden->name }}</option>
+                    @foreach ($analisis as $analis)
+                    <option value="{{ $analis->id }}">{{ $analis->garden->name }}</option>
                     @endforeach
                 </select>
                 <label class="text-sm" for="garden_id">Pilih Lahan yang akan dianalisis</label>
@@ -75,25 +76,26 @@
     </div>
 </div>
 @endsection
+
 @push('js')
 <script src="{{ asset('assets/js/load.js') }}"></script>
 <script>
     $(document).ready(function() {
-    $('#garden_id').change(function() {
-    var selectedId = $(this).val();
-    var selectedAnalize = {!! $analizes->toJson() !!}.find(function(analize) {
-    return analize.id == selectedId;
-    });
-    if (selectedAnalize) {
-    $('#jenis').val(selectedAnalize.jenis);
-    $('#keasaman').val(selectedAnalize.keasaman);
-    $('#kelembaban').val(selectedAnalize.kelembaban);
-    } else {
-    $('#jenis').val('');
-    $('#keasaman').val('');
-    $('#kelembaban').val('');
-    }
-    });
+        $('#garden_id').change(function() {
+            var selectedId = $(this).val();
+            var selectedAnalize = {!! $analisis->toJson() !!}.find(function(analize) {
+                return analize.id == selectedId;
+            });
+            if (selectedAnalize) {
+                $('#jenis').val(selectedAnalize.jenis);
+                $('#keasaman').val(selectedAnalize.keasaman);
+                $('#kelembaban').val(selectedAnalize.kelembaban);
+            } else {
+                $('#jenis').val('');
+                $('#keasaman').val('');
+                $('#kelembaban').val('');
+            }
+        });
     });
 </script>
 @endpush

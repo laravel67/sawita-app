@@ -1,7 +1,7 @@
 <div class="header-top align-items-center d-flex" style="height: 1rem;">
     <div class="container">
         <div class="logo d-md-none">
-            <a href="">
+            <a href="/">
                 <strong>APS</strong>
             </a>
         </div>

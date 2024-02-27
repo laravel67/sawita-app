@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Galerry;
-use Illuminate\Support\Arr;
 
 class GalerryController extends Controller
 {

@@ -13,15 +13,14 @@ use App\Http\Controllers\GardenController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AddlistController;
-use App\Http\Controllers\AnalizeController;
+use App\Http\Controllers\AnalisiController;
+use App\Http\Controllers\GalerryController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\AnalizedController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\GalerryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,10 +59,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 // 1.Authentication Login
 Route::get('/login', [LoginController::class, 'showForm'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/', [HomeController::class, 'index'])->name('home');
 /*======================================================================================================*/
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::resource('/', HomeController::class)->names('home');
     // 2.Route Halaman Dashboard 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     /*======================================================================================================*/
@@ -72,9 +71,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dasboard/stoks', StokController::class)->names('stok');
     /*======================================================================================================*/
     // 4.Route untuk Melakukan analisis tanah
-    Route::get('/dashboar/analize/start', [AnalizeController::class, 'index'])->name('analize.index');
-    Route::post('/dashboar/analize/results', [AnalizeController::class, 'analize'])->name('process.analize');
-    Route::resource('/dashboard/results', AnalizedController::class)->names('result');
+    Route::resource('/dashboard/analisis', AnalisiController::class)->names('analisi');
     /*======================================================================================================*/
     // 5.Route Data Lahan (CRUD)
     Route::resource('/dashboard/gardens', GardenController::class)->names('garden');

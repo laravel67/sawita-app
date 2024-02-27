@@ -2,45 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Analisi;
+use App\Models\Pupuk;
 use App\Models\Garden;
-use App\Models\Analize;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-
 
 class AddlistController extends Controller
 {
     public function __construct()
     {
-        view()->share('title', 'Generated');
+        $this->middleware('auth');
+        view()->share('title', 'Hasil Generate Jadwal');
     }
 
     public function generating(Request $request)
     {
-        $analizeData = Analize::where('garden_id', $request->garden_id)->first();
-
-        if (!$analizeData) {
-            return back()->with('error', 'Lahan ini belum dianalisis. Silakan ke halaman analisis!');
-        }
-
+        $analiseData = Analisi::where('garden_id', $request->garden_id)->first();
         $validatedData = $request->validate([
             'garden_id' => 'required',
-            'jenis' => ['required', Rule::in([$analizeData->jenis])],
+            'jenis' => 'required',
             'keasaman' => 'required|numeric|min:0|max:14',
             'kelembaban' => 'required|numeric|min:0|max:100',
             'tujuan' => 'required',
-        ], [
-            'jenis_tanah.required' => 'The jenis tanah field is required.',
-            'jenis_tanah.in' => 'The selected jenis tanah is invalid.',
-            'keasaman.required' => 'The keasaman field is required.',
-            'keasaman.numeric' => 'The keasaman field must be a number.',
-            'keasaman.min' => 'The keasaman field must be at least :min.',
-            'keasaman.max' => 'The keasaman field may not be greater than :max.',
-            'kelembaban.required' => 'The kelembaban field is required.',
-            'kelembaban.numeric' => 'The kelembaban field must be a number.',
-            'kelembaban.min' => 'The kelembaban field must be at least :min.',
-            'kelembaban.max' => 'The kelembaban field may not be greater than :max.',
-            'tujuan.required' => 'The tujuan field is required.',
         ]);
 
         $gardenId = $validatedData['garden_id'];
@@ -48,75 +31,76 @@ class AddlistController extends Controller
         $keasaman = $validatedData['keasaman'];
         $kelembaban = $validatedData['kelembaban'];
         $tujuan = $validatedData['tujuan'];
+
         $garden = Garden::findOrFail($gardenId);
 
         $frekuensiPemupukan = $this->getFrekuensiPemupukan($jenisTanah, $tujuan);
-
         $jadwalPemupukan = [];
         $currentDate = now();
+
         for ($i = 0; $i < 12; $i += $frekuensiPemupukan) {
             $tanggalPemupukan = clone $currentDate;
             $tanggalPemupukan->addMonths($i);
             $jadwalPemupukan[] = $tanggalPemupukan;
         }
 
+        $pupuks = Pupuk::all();
+        $jumlah_batang = $garden->jumlah_batang;
+
+        $requiredAmountPerPlant = $this->calculateRequiredAmountPerPlant($jenisTanah, $tujuan);
+        $totalPupuk = $this->calculateTotalFertilizer($jenisTanah, $keasaman, $kelembaban, $tujuan, $jumlah_batang);
+
         $sub = 'Hasil generate jadwal';
-        return view(
-            'dashboard.jadwal.generated',
-            compact(
-                'sub',
-                'jadwalPemupukan',
-                'garden',
-                'jenisTanah',
-                'keasaman',
-                'kelembaban',
-                'tujuan',
-            )
-        );
+
+        return view('dashboard.jadwal.generated', compact(
+            'sub',
+            'jadwalPemupukan',
+            'garden',
+            'jenisTanah',
+            'keasaman',
+            'kelembaban',
+            'tujuan',
+            'requiredAmountPerPlant',
+            'totalPupuk',
+            'pupuks'
+        ));
     }
 
     private function getFrekuensiPemupukan($jenisTanah, $tujuanPemupukan)
     {
         switch ($jenisTanah) {
             case 'Tanah Gambut':
-                if ($tujuanPemupukan == 'Buah') {
-                    return 3; // Pemupukan setiap 3 bulan
-                } elseif ($tujuanPemupukan == 'Batang') {
-                    return 2; // Pemupukan setiap 2 bulan
-                } else {
-                    return 4; // Pemupukan setiap 4 bulan
-                }
-                break;
+                return $tujuanPemupukan == 'Buah' ? 3 : ($tujuanPemupukan == 'Batang' ? 2 : 4);
             case 'Tanah Alluvial':
-                if ($tujuanPemupukan == 'Buah') {
-                    return 2; // Pemupukan setiap 2 bulan
-                } elseif ($tujuanPemupukan == 'Batang') {
-                    return 1; // Pemupukan setiap bulan
-                } else {
-                    return 3; // Pemupukan setiap 3 bulan
-                }
-                break;
+                return $tujuanPemupukan == 'Buah' ? 2 : ($tujuanPemupukan == 'Batang' ? 1 : 3);
             case 'Tanah Laterit':
-                if ($tujuanPemupukan == 'Buah') {
-                    return 4; // Pemupukan setiap 4 bulan
-                } elseif ($tujuanPemupukan == 'Batang') {
-                    return 3; // Pemupukan setiap 3 bulan
-                } else {
-                    return 6; // Pemupukan setiap 6 bulan
-                }
-                break;
+                return $tujuanPemupukan == 'Buah' ? 4 : ($tujuanPemupukan == 'Batang' ? 3 : 6);
             case 'Tanah Podzolik':
-                if ($tujuanPemupukan == 'Buah') {
-                    return 1; // Pemupukan setiap bulan
-                } elseif ($tujuanPemupukan == 'Batang') {
-                    return 2; // Pemupukan setiap 2 bulan
-                } else {
-                    return 3; // Pemupukan setiap 3 bulan
-                }
-                break;
+                return $tujuanPemupukan == 'Buah' ? 1 : ($tujuanPemupukan == 'Batang' ? 2 : 3);
             default:
-                return 0; // Tidak ditentukan
-                break;
+                return 0;
         }
+    }
+
+    private function calculateRequiredAmountPerPlant($jenisTanah, $tujuanPemupukan)
+    {
+        switch ($jenisTanah) {
+            case 'Tanah Gambut':
+                return $tujuanPemupukan == 'Buah' ? 2 : ($tujuanPemupukan == 'Batang' ? 1.5 : 3);
+            case 'Tanah Alluvial':
+                return $tujuanPemupukan == 'Buah' ? 1.5 : ($tujuanPemupukan == 'Batang' ? 1 : 2);
+            case 'Tanah Laterit':
+                return $tujuanPemupukan == 'Buah' ? 3 : ($tujuanPemupukan == 'Batang' ? 2 : 4);
+            case 'Tanah Podzolik':
+                return $tujuanPemupukan == 'Buah' ? 1 : ($tujuanPemupukan == 'Batang' ? 1.5 : 2);
+            default:
+                return 0;
+        }
+    }
+
+    private function calculateTotalFertilizer($jenisTanah, $keasaman, $kelembaban, $tujuan, $jumlah_batang)
+    {
+        $requiredAmountPerPlant = $this->calculateRequiredAmountPerPlant($jenisTanah, $tujuan);
+        return $requiredAmountPerPlant * $jumlah_batang;
     }
 }

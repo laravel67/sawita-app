@@ -21,9 +21,6 @@ class StokController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $pupuks = Pupuk::latest()->get();
@@ -32,9 +29,6 @@ class StokController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -85,10 +79,6 @@ class StokController extends Controller
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Stok $stok)
     {
         $stok->delete();

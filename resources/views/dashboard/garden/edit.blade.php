@@ -102,26 +102,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Deskripsi Lahan</label>
-                    <input id="deskripsi" type="hidden" name="deskripsi"
-                        value="{{ old('deskripsi', $garden->deskripsi) }}">
-                    <trix-editor input="deskripsi"></trix-editor>
-                    @error('deskripsi')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
-                <hr>
-                <div class="d-md-flex align-items-center justify-content-md-between">
-                    <div class="form-group">
-                        <div class="form-check mandatory">
-                            <input type="checkbox" class="form-check-input" id="checkbox">
-                            <label class="form-check-label form-label" for="checkbox">Yakin ingin menyimpan data
-                                ini?</label>
-                        </div>
-                    </div>
+                <div class="d-md-flex align-items-center justify-content-md-end">
                     <div class="text-end">
                         <a href="{{ route('garden.index') }}" class="btn btn-outline-secondary">
                             Kembali

@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gardens', function (Blueprint $table) {
+        Schema::create('slides', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('lokasi');
-            $table->bigInteger('luas')->default(0);
-            $table->string('satuan');
-            $table->bigInteger('jumlah_batang')->default(0);
-            $table->string('jenis_tanah');
-            $table->string('image')->nullable();
+            $table->string('title');
+            $table->text('body')->nullable();
+            $table->string('image');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gardens');
+        Schema::dropIfExists('slides');
     }
 };

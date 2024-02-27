@@ -21,10 +21,6 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('users.add-user', [
@@ -47,16 +43,6 @@ class UserController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         return redirect()->route('users.index')->with('success', 'Pengguna baru Berhasil ditambah');
-    }
-
-    public function show(User $user)
-    {
-        //
-    }
-
-    public function edit(User $user)
-    {
-        //
     }
 
     public function update(Request $request, User $user)

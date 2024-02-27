@@ -19,7 +19,6 @@ class PupukController extends Controller
         return view('dashboard.pupuk.index');
     }
 
-
     public function create()
     {
         $categories = Category::all();
@@ -29,7 +28,6 @@ class PupukController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,7 +35,6 @@ class PupukController extends Controller
             'category_id' => 'required',
             'satuan' => 'required',
             'manfaat' => 'required',
-            'penggunaan' => 'required',
             'image' => 'max:1024|image|nullable',
         ]);
         if ($request->file('image')) {
@@ -46,13 +43,6 @@ class PupukController extends Controller
         Pupuk::create($validated);
         return redirect()->route('pupuk.index')->with('success', 'Data berhasil ditambah');
     }
-
-
-    public function show(Pupuk $pupuk)
-    {
-        //
-    }
-
 
     public function edit(Pupuk $pupuk)
     {
@@ -64,14 +54,12 @@ class PupukController extends Controller
         ]);
     }
 
-
     public function update(Request $request, Pupuk $pupuk)
     {
         $rules = [
             'category_id' => 'required',
             'satuan' => 'required',
             'manfaat' => 'required',
-            'penggunaan' => 'required',
             'image' => 'max:1024|image|nullable',
         ];
         if ($request->name != $pupuk->name) {

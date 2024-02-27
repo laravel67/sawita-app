@@ -59,8 +59,4 @@ class SettingController extends Controller
         Setting::where('id', $setting->id)->update($validated);
         return redirect()->route('setting.index')->with('success', 'Setting Aplikasi selesai');
     }
-    public function destroy(Setting $setting)
-    {
-        //
-    }
 }

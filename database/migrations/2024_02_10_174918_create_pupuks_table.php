@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('satuan');
             $table->text('manfaat');
-            $table->text('penggunaan');
             $table->string('image')->nullable();
             $table->timestamps();
         });

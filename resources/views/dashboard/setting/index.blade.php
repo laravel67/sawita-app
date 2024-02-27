@@ -124,21 +124,82 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="card">
-                <div class="card-body">
-                    <form enctype="multipart/form-data" method="POST" action="{{ route('galery.store') }}">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title Gallery</label>
-                            <input type="text" name="title" id="title" class="form-control" />
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Tambah Galeri</h6>
                         </div>
-                        <div class="mb-3">
-                            <label for="imageGallery" class="form-label">Image Gallery</label>
-                            <input type="file" id="imageGallery" class="form-control" name="image[]" multiple>
+                        <div class="card-body">
+                            <form enctype="multipart/form-data" method="POST" action="{{ route('galery.store') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title Galeri</label>
+                                    <input type="text" name="title" id="title" class="form-control" />
+                                </div>
+                                <div class="mb-3">
+                                    <label for="imageGallery" class="form-label">Gambar/Image</label>
+                                    <input type="file" id="imageGallery" class="form-control" name="image[]" multiple>
+                                    <small class="text-muted">Bisa mengupload 2 atau lebih gambar</small>
+                                </div>
+                                <div id="preview" class="p-4"></div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Upload</button>
+                                </div>
+                            </form>
                         </div>
-                        <div id="preview" class="p-4"></div>
-                        <button class="btn btn-primary" type="submit">Upload Files</button>
-                    </form>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Buat Slide</h6>
+                        </div>
+                        <div class="card-body">
+                            <form enctype="multipart/form-data" method="POST" action="{{ route('home.store') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Judul Slide</label>
+                                    <input type="text" name="title" id="title" class="form-control @error('title')
+                                        is-invalid
+                                    @enderror" value="{{ old('title') }}" />
+                                    @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="body" class="form-label">Deskripsi Slide</label>
+                                    <textarea name="body" id="body" class="form-control @error('body')
+                                            is-invalid
+                                        @enderror">{{ old('body') }}
+                                </textarea>
+                                    @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Gambar/Image</label>
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror"
+                                        name="image" id="slide" onchange="previewSlide()">
+                                    <div class="img-fluid mt-3">
+                                        <img class="img-fluid" id="slide-preview" width="200">
+                                    </div>
+                                    @error('image')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Upload</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,11 +241,22 @@
                 body: formData
             });
             const data = await response.json();
-            status.textContent = data.message;
+            console.log(data);
         } catch (error) {
             console.error('Error:', error);
-            status.textContent = 'Error uploading files';
         }
     });
+</script>
+<script>
+    function previewSlide(){
+    const image      = document.querySelector('#slide');
+    const imgPreview = document.querySelector('#slide-preview');
+    imgPreview.style.display ='block';
+    const oFReader = new FileReader();
+    oFReader.readAsDataURL(image.files[0])
+    oFReader.onload = function(oFREvent){
+        imgPreview.src = oFREvent.target.result;
+    }
+}
 </script>
 @endpush

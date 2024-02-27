@@ -35,10 +35,13 @@
             <div class="col-md-4 mb-4">
                 <h2>Sawita <span>Raya</span></h2>
                 <p class="menu">
-                    <a href="/"> Home</a> |
-                    <a href="{{ route('about.show') }}"> About</a>
+                    <a class="{{ Request::is('home*') ? 'text-light': 'text-muted' }}" href="/"> Home</a> |
+                    <a class="{{ Request::is('about*') ? 'text-light': 'text-muted' }}"
+                        href="{{ route('about.show') }}">
+                        About</a>
                     @can('admin')
-                    | <a href="#">Pengaturan</a>
+                    | <a class="{{ Request::is('dashboard/setting*') ? 'text-light': 'text-muted' }}"
+                        href="{{ route('setting.index') }}">Pengaturan</a>
                     @endcan
             </div>
         </div>

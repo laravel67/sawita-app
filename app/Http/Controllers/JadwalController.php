@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Analize;
-use App\Models\Garden;
+use App\Models\Analisi;
 use App\Models\Jadwal;
 use Illuminate\Http\Request;
 
@@ -26,35 +25,47 @@ class JadwalController extends Controller
 
     public function create()
     {
-        $analizes = Analize::all();
+        $analisis = Analisi::latest()->get();
         return view('dashboard.jadwal.create', [
             'sub' => 'Generate Jadwal',
-            'analizes' => $analizes,
+            'analisis' => $analisis,
         ]);
     }
 
     public function store(Request $request)
     {
-        $validate = $request->validate([
+        $validatedData = $request->validate([
             'garden_id' => 'required',
             'keasaman' => 'required',
             'kelembaban' => 'required',
             'tujuan' => 'required',
+            'pupuk_id' => 'required',
+            'pupuk_perbatang' => 'required',
+            'total_pupuk' => 'required',
             'jadwal' => 'required|array',
             'jadwal.*' => 'required|date',
         ]);
-        $jadwal = $request->jadwal;
-        foreach ($jadwal as $jadwalItem) {
+
+        $totalPupuk = $request->total_pupuk;
+        $jumlahJadwal = count($validatedData['jadwal']);
+        $total = $totalPupuk / $jumlahJadwal;
+
+        foreach ($validatedData['jadwal'] as $jadwalItem) {
             Jadwal::create([
-                'garden_id' => $request->garden_id,
-                'keasaman' => $request->keasaman,
-                'kelembaban' => $request->kelembaban,
-                'tujuan' => $request->tujuan,
+                'garden_id' => $validatedData['garden_id'],
+                'keasaman' => $validatedData['keasaman'],
+                'kelembaban' => $validatedData['kelembaban'],
+                'tujuan' => $validatedData['tujuan'],
+                'pupuk_id' => $validatedData['pupuk_id'],
                 'jadwal' => $jadwalItem,
+                'pupuk_perbatang' => $validatedData['pupuk_perbatang'],
+                'total_pupuk' => $total,
             ]);
         }
+
         return redirect()->route('jadwal.index')->with('success', 'Jadwal Pemupukan berhasil ditambah');
     }
+
 
     public function update(Request $request, Jadwal $jadwal)
     {

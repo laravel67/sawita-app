@@ -77,16 +77,6 @@
                     </div>
                     @enderror
                 </div>
-                <div class="form-group mandatory">
-                    <label class="form-label">Jelaskan Cara Pemakain Pupuk</label>
-                    <input id="penggunaan" type="hidden" name="penggunaan" value="{{ old('penggunaan') }}">
-                    <trix-editor input="penggunaan"></trix-editor>
-                    @error('penggunaan')
-                    <div class="invalid-feedback">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                </div>
                 <div class="col-md-6 col-12 mb-md-3">
                     <div class="form-group">
                         <label class="form-label">Gambar/Image</label>

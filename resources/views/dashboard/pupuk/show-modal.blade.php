@@ -20,10 +20,6 @@
                     <h4>{{ __('Kegunaan/Manfaat:') }}</h4>
                     {{ $pupuk->manfaat }}
                     <hr>
-                    <h4>{{ __('Cara Pemakaian: ') }}</h4>
-                    <p>
-                        {!! $pupuk->penggunaan !!}
-                    </p>
                 </article>
             </div>
             <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">

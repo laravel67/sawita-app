@@ -6,7 +6,7 @@
         <h4 class="card-title">{{ $sub }}</h4>
     </div>
     <div class="card-body">
-        <form id="analysisForm" action="{{ route('process.analize') }}" method="POST" enctype="multipart/form-data">
+        <form id="analysisForm" action="{{ route('analisi.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-floating mb-4">
                 <select class="form-select" id="garden_id" name="garden_id">
@@ -60,8 +60,8 @@
     </div>
 </div>
 @endsection
-
 @push('js')
+<script src="{{ asset('assets/js/load.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('#garden_id').change(function() {
