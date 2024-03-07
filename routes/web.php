@@ -1,8 +1,6 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
@@ -36,12 +34,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     /*======================================================================================================*/
     //2.Route untuk menambah user baru dan untuk & Generate Username dengan Jquery
     Route::resource('/dashboard/users', UserController::class)->names('users');
-    Route::post('/check-username', function (Request $request) {
-        $username = $request->input('username');
-        $user = User::where('username', $username)->first();
-        $response = ['exists' => $user !== null];
-        return response()->json($response);
-    });
     /*======================================================================================================*/
     //3.Route Untuk menambah kategori Jenis Pupuk
     Route::resource('/dashboard/categories', CategoryController::class)->names('category');
